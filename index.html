@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f5efe6">
+<meta name="description" content="Your personal 2-week Python mastery study plan">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PyPlan">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" id="manifestLink">
+<title>PyPlan — 2-Week Python Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #faf6f0;
+    --bg2:         #f5ede0;
+    --surface:     #fffdf9;
+    --surface2:    #f0e8da;
+    --border:      rgba(139,100,60,0.13);
+    --border-hover:rgba(139,100,60,0.28);
+    --text:        #2c1f0e;
+    --text2:       #5c4a32;
+    --muted:       #9e8166;
+    --espresso:    #3b2010;
+    --coffee:      #7b4f2e;
+    --latte:       #c9a07a;
+    --cream:       #f0dfc4;
+    --sage:        #6b8c6e;
+    --sage-dim:    rgba(107,140,110,0.12);
+    --sage-glow:   rgba(107,140,110,0.3);
+    --warm-red:    #c0573a;
+    --gold:        #b58a3a;
+    --blue-ink:    #4a6fa5;
+    --font-head:   'Playfair Display', serif;
+    --font-body:   'Lora', serif;
+    --font-mono:   'DM Mono', monospace;
+    --radius:      16px;
+    --radius-sm:   10px;
+    --shadow:      0 2px 16px rgba(59,32,16,0.08);
+    --shadow-lg:   0 8px 32px rgba(59,32,16,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── PAPER TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── WARM GRADIENT BLOBS ── */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #e8c99a 0%, transparent 70%);
+    top: -200px; right: -150px;
+    opacity: 0.5;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #d4a574 0%, transparent 70%);
+    bottom: -180px; left: -120px;
+    opacity: 0.35;
+  }
+  .blob-3 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #b8d4b8 0%, transparent 70%);
+    top: 40%; left: 60%;
+    opacity: 0.2;
+  }
+
+  /* ── LAYOUT ── */
+  .app { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; padding: 0 20px 100px; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 52px 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1.5px solid var(--cream);
+    margin-bottom: 28px;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo {
+    width: 48px; height: 48px;
+    background: var(--espresso);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 14px; font-weight: 500;
+    color: var(--cream);
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59,32,16,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo::after {
+    content: '☕';
+    position: absolute;
+    font-size: 20px;
+    opacity: 0.12;
+    bottom: -4px; right: -2px;
+  }
+
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(30px, 6vw, 46px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--espresso);
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .subtitle {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  .coffee-cup {
+    font-size: 18px;
+    animation: steam 3s ease-in-out infinite;
+  }
+
+  @keyframes steam {
+    0%, 100% { transform: translateY(0) rotate(-3deg); opacity: 0.8; }
+    50% { transform: translateY(-4px) rotate(3deg); opacity: 1; }
+  }
+
+  /* ── INSTALL BANNER ── */
+  .install-banner {
+    display: none;
+    align-items: center;
+    gap: 14px;
+    background: var(--espresso);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-lg);
+    animation: slideDown 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .install-banner.show { display: flex; }
+
+  .install-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .install-text { flex: 1; }
+  .install-text strong { font-size: 14px; font-weight: 600; color: #fff; display: block; margin-bottom: 2px; font-family: var(--font-head); }
+  .install-text span { font-size: 11px; color: rgba(255,255,255,0.55); font-family: var(--font-mono); }
+
+  .install-btn {
+    background: var(--cream);
+    color: var(--espresso);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-head);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .install-btn:hover { opacity: 0.88; }
+  .install-btn:active { transform: scale(0.97); }
+
+  .install-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .install-close:hover { color: rgba(255,255,255,0.8); }
+
+  /* ── PROGRESS SECTION ── */
+  .progress-section {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--espresso), var(--latte), var(--gold));
+    border-radius: 3px 3px 0 0;
+  }
+
+  .progress-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progress-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+
+  .stat-card:nth-child(1)::after { background: var(--sage); }
+  .stat-card:nth-child(2)::after { background: var(--blue-ink); }
+  .stat-card:nth-child(3)::after { background: var(--gold); }
+
+  .stat-value {
+    font-family: var(--font-head);
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--espresso);
+    display: block;
+  }
+
+  .stat-value.sage   { color: var(--sage); }
+  .stat-value.ink    { color: var(--blue-ink); }
+  .stat-value.gold   { color: var(--gold); }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-top: 3px;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-bar-track {
+    background: var(--cream);
+    border-radius: 99px;
+    height: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--espresso) 0%, var(--coffee) 50%, var(--latte) 100%);
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(59,32,16,0.2);
+    width: 0%;
+    position: relative;
+  }
+
+  .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 12px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 99px;
+  }
+
+  /* ── WEEK SECTION ── */
+  .week-section { margin-bottom: 28px; }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 0 4px;
+  }
+
+  .week-badge {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 99px;
+    border: 1.5px solid;
+  }
+
+  .week-badge.w1 { color: var(--blue-ink); border-color: rgba(74,111,165,0.3); background: rgba(74,111,165,0.08); }
+  .week-badge.w2 { color: var(--coffee);   border-color: rgba(123,79,46,0.3);  background: rgba(123,79,46,0.08);  }
+
+  .week-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .week-progress {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--latte);
+    background: var(--cream);
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+  }
+
+  /* ── DAY CARDS ── */
+  .day-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.1s, background 0.2s;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(59,32,16,0.05);
+    animation: fadeIn 0.35s ease both;
+  }
+
+  .day-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: transparent;
+    transition: background 0.25s;
+  }
+
+  .day-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow);
+    transform: translateY(-2px);
+    background: var(--bg);
+  }
+
+  .day-card:active { transform: translateY(0); }
+
+  .day-card.done {
+    border-color: rgba(107,140,110,0.3);
+    background: rgba(107,140,110,0.04);
+  }
+
+  .day-card.done::before { background: var(--sage); }
+
+  /* ── CHECKBOX ── */
+  .checkbox {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--cream);
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    background: var(--bg2);
+  }
+
+  .day-card.done .checkbox {
+    background: var(--sage);
+    border-color: var(--sage);
+    box-shadow: 0 0 0 3px rgba(107,140,110,0.15);
+  }
+
+  .checkmark {
+    display: none;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .day-card.done .checkmark { display: block; }
+
+  /* ── DAY CONTENT ── */
+  .day-content { flex: 1; min-width: 0; }
+
+  .day-number {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .day-title {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--espresso);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .day-card.done .day-title {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--latte);
+  }
+
+  .day-topics {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .day-card.done .day-topics { color: var(--muted); }
+
+  /* ── TAGS ── */
+  .tag {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+    border: 1px solid transparent;
+  }
+
+  .tag-core    { color: var(--blue-ink); background: rgba(74,111,165,0.1);  border-color: rgba(74,111,165,0.2);  }
+  .tag-project { color: var(--sage);     background: rgba(107,140,110,0.1); border-color: rgba(107,140,110,0.25);}
+  .tag-review  { color: var(--gold);     background: rgba(181,138,58,0.1);  border-color: rgba(181,138,58,0.2);  }
+  .tag-rest    { color: var(--warm-red); background: rgba(192,87,58,0.09);  border-color: rgba(192,87,58,0.2);   }
+
+  /* ── COMPLETION BANNER ── */
+  .completion-banner {
+    display: none;
+    background: linear-gradient(135deg, #f5f0e8, #ede5d8);
+    border: 1.5px solid var(--latte);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    text-align: center;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-lg);
+    animation: fadeIn 0.5s ease;
+  }
+
+  .completion-banner.show { display: block; }
+
+  .completion-emoji { font-size: 44px; display: block; margin-bottom: 12px; }
+
+  .completion-title {
+    font-family: var(--font-head);
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--espresso);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .completion-sub {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text2);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0 20px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── BOTTOM BAR ── */
+  .bottom-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1.5px solid var(--cream);
+  }
+
+  .bottom-bar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bottom-bar-label::before {
+    content: '☕';
+    font-size: 14px;
+  }
+
+  .reset-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    border-radius: var(--radius-sm);
+    padding: 8px 18px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+
+  .reset-btn:hover {
+    border-color: var(--warm-red);
+    color: var(--warm-red);
+    background: rgba(192,87,58,0.05);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .day-card:nth-child(1) { animation-delay: 0.03s; }
+  .day-card:nth-child(2) { animation-delay: 0.07s; }
+  .day-card:nth-child(3) { animation-delay: 0.11s; }
+  .day-card:nth-child(4) { animation-delay: 0.15s; }
+  .day-card:nth-child(5) { animation-delay: 0.19s; }
+  .day-card:nth-child(6) { animation-delay: 0.23s; }
+  .day-card:nth-child(7) { animation-delay: 0.27s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    header { padding: 36px 0 24px; }
+    .stats-row { gap: 8px; }
+    .stat-value { font-size: 24px; }
+    .stat-card { padding: 12px 8px; }
+    .day-card { padding: 14px 16px; }
+    .install-banner { flex-wrap: wrap; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--cream); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--latte); }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <div class="logo">Py</div>
+      <h1>PyPlan</h1>
+    </div>
+    <div class="header-meta">
+      <p class="subtitle">// 2-week python mastery sprint · intermediate track</p>
+      <span class="coffee-cup">☕</span>
+    </div>
+  </header>
+
+  <!-- INSTALL BANNER -->
+  <div class="install-banner" id="installBanner">
+    <div class="install-icon">⬇</div>
+    <div class="install-text">
+      <strong>Install as App</strong>
+      <span>Works offline · no app store needed</span>
+    </div>
+    <button class="install-btn" id="installBtn">Install</button>
+    <button class="install-close" id="installClose" aria-label="Dismiss">✕</button>
+  </div>
+
+  <!-- COMPLETION BANNER -->
+  <div class="completion-banner" id="completionBanner">
+    <span class="completion-emoji">🎉</span>
+    <p class="completion-title">Sprint complete!</p>
+    <p class="completion-sub">You finished all 14 days. You're officially a Python developer — go brew yourself something special.</p>
+  </div>
+
+  <!-- PROGRESS SECTION -->
+  <div class="progress-section">
+    <div class="progress-eyebrow">Your progress</div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="stat-value sage" id="statDone">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value ink" id="statLeft">14</span>
+        <span class="stat-label">Remaining</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value gold" id="statPct">0%</span>
+        <span class="stat-label">Progress</span>
+      </div>
+    </div>
+    <div class="progress-bar-label">
+      <span id="progressPct">0% complete</span>
+      <span>14 days total</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+  </div>
+
+  <!-- PLAN DAYS -->
+  <div id="planContainer"></div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <span class="bottom-bar-label">progress saved locally</span>
+    <button class="reset-btn" id="resetBtn">Reset all</button>
+  </div>
+
+</div>
+
+<script>
+/* ── DATA ── */
+const days = [
+  { day:  1, week: 1, title: "Functions & scope",        topics: "Defining functions, parameters, return values, local vs global scope", tag: "core" },
+  { day:  2, week: 1, title: "Lists & tuples",           topics: "Slicing, list methods, unpacking, when to use each", tag: "core" },
+  { day:  3, week: 1, title: "Dictionaries & sets",      topics: "Key-value pairs, dict methods, set operations, comprehensions", tag: "core" },
+  { day:  4, week: 1, title: "String manipulation",      topics: "Formatting, slicing, split/join, common string methods", tag: "core" },
+  { day:  5, week: 1, title: "File I/O & exceptions",    topics: "Reading/writing files, try/except/finally, custom errors", tag: "core" },
+  { day:  6, week: 1, title: "Mini project day",         topics: "Build a small CLI tool — to-do list, word counter, or quiz app", tag: "project" },
+  { day:  7, week: 1, title: "Rest & review",            topics: "Revisit weak spots, skim week 2 topics, no pressure", tag: "rest" },
+  { day:  8, week: 2, title: "Object-oriented Python",   topics: "Classes, __init__, methods, self, basic inheritance", tag: "core" },
+  { day:  9, week: 2, title: "Modules & packages",       topics: "import, pip, standard library — os, sys, datetime, random", tag: "core" },
+  { day: 10, week: 2, title: "Comprehensions",           topics: "List & dict comprehensions, conditional comprehensions, generators", tag: "core" },
+  { day: 11, week: 2, title: "Working with data",        topics: "CSV files, JSON parsing, basic pandas — read_csv, head, filter", tag: "core" },
+  { day: 12, week: 2, title: "Algorithms & problem solving", topics: "Sorting, searching, recursion basics, LeetCode easy warmup", tag: "core" },
+  { day: 13, week: 2, title: "Final project",            topics: "Build something showable: data analyser, game, or web scraper", tag: "project" },
+  { day: 14, week: 2, title: "Polish & reflect",         topics: "Code review your project, add docstrings, prepare to explain your journey", tag: "review" },
+];
+
+const tagLabels = { core: "Core", project: "Project", rest: "Rest day", review: "Review" };
+
+let state = JSON.parse(localStorage.getItem('pyplan_state') || '[]');
+if (state.length !== days.length) state = new Array(days.length).fill(false);
+
+function saveState() {
+  localStorage.setItem('pyplan_state', JSON.stringify(state));
+}
+
+function updateStats() {
+  const done = state.filter(Boolean).length;
+  const pct = Math.round((done / days.length) * 100);
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statLeft').textContent = days.length - done;
+  document.getElementById('statPct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '% complete';
+  document.getElementById('completionBanner').classList.toggle('show', done === days.length);
+
+  const w1Done = state.slice(0, 7).filter(Boolean).length;
+  const w2Done = state.slice(7).filter(Boolean).length;
+  const w1El = document.getElementById('weekprog-1');
+  const w2El = document.getElementById('weekprog-2');
+  if (w1El) w1El.textContent = w1Done + ' / 7';
+  if (w2El) w2El.textContent = w2Done + ' / 7';
+}
+
+function render() {
+  const container = document.getElementById('planContainer');
+  container.innerHTML = '';
+
+  [1, 2].forEach(week => {
+    const section = document.createElement('div');
+    section.className = 'week-section';
+
+    const header = document.createElement('div');
+    header.className = 'week-header';
+    header.innerHTML = `
+      <span class="week-badge w${week}">Week ${week}</span>
+      <span class="week-title">${week === 1 ? 'Core Python skills' : 'Going deeper'}</span>
+      <span class="week-progress" id="weekprog-${week}"></span>`;
+    section.appendChild(header);
+
+    days.filter(d => d.week === week).forEach(d => {
+      const idx = d.day - 1;
+      const card = document.createElement('div');
+      card.className = 'day-card' + (state[idx] ? ' done' : '');
+      card.setAttribute('role', 'checkbox');
+      card.setAttribute('aria-checked', state[idx] ? 'true' : 'false');
+      card.setAttribute('tabindex', '0');
+      card.innerHTML = `
+        <div class="checkbox"><span class="checkmark">✓</span></div>
+        <div class="day-content">
+          <span class="day-number">Day ${d.day} of 14</span>
+          <div class="day-title">${d.title} <span class="tag tag-${d.tag}">${tagLabels[d.tag]}</span></div>
+          <p class="day-topics">${d.topics}</p>
+        </div>`;
+
+      const toggle = () => {
+        state[idx] = !state[idx];
+        card.classList.toggle('done', state[idx]);
+        card.setAttribute('aria-checked', state[idx] ? 'true' : 'false');
+        saveState();
+        updateStats();
+      };
+
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', e => {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+      });
+      section.appendChild(card);
+    });
+
+    container.appendChild(section);
+  });
+
+  updateStats();
+}
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('Reset all progress? Your streak will be lost.')) {
+    state = new Array(days.length).fill(false);
+    saveState();
+    render();
+  }
+});
+
+/* ── PWA INSTALL ── */
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBanner').classList.add('show');
+});
+
+document.getElementById('installBtn').addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('installBanner').classList.remove('show');
+  }
+});
+
+document.getElementById('installClose').addEventListener('click', () => {
+  document.getElementById('installBanner').classList.remove('show');
+});
+
+window.addEventListener('appinstalled', () => {
+  document.getElementById('installBanner').classList.remove('show');
+});
+
+/* ── PWA: INLINE MANIFEST + SERVICE WORKER ── */
+const manifest = {
+  name: "PyPlan — 2-Week Python Sprint",
+  short_name: "PyPlan",
+  description: "Your personal 2-week Python mastery study plan",
+  start_url: "./",
+  display: "standalone",
+  background_color: "#faf6f0",
+  theme_color: "#3b2010",
+  orientation: "portrait",
+  icons: [
+    {
+      src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="40" fill="#3b2010"/><text x="96" y="120" font-family="serif" font-size="90" font-weight="900" fill="#f0dfc4" text-anchor="middle">Py</text></svg>`),
+      sizes: "192x192",
+      type: "image/svg+xml",
+      purpose: "any maskable"
+    },
+    {
+      src: "data:image/svg+xml," + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="100" fill="#3b2010"/><text x="256" y="330" font-family="serif" font-size="240" font-weight="900" fill="#f0dfc4" text-anchor="middle">Py</text></svg>`),
+      sizes: "512x512",
+      type: "image/svg+xml",
+      purpose: "any maskable"
+    }
+  ]
+};
+
+const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+const manifestURL = URL.createObjectURL(blob);
+document.getElementById('manifestLink').setAttribute('href', manifestURL);
+
+/* ── SERVICE WORKER (inline via blob) ── */
+const swCode = `
+const CACHE = 'pyplan-v1';
+const ASSETS = [self.location.href];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => cached))
+  );
+});
+`;
+
+if ('serviceWorker' in navigator) {
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swURL = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swURL).catch(() => {});
+}
+
+render();
+</script>
+</body>
+</html>
